@@ -1,0 +1,60 @@
+import Other from './other.mdx';
+import Question from '../components/question';
+import Attention from '../components/attention';
+
+export const Content = () => <>ページの概要を書いたりするとよさそう🐟</>
+
+export default function Layout({children}) {
+    return <main>{children}</main>;
+}
+
+## Props
+propsを渡せる  
+tsx
+```jsx
+<Example name="mars"/>
+```
+mdx
+```mdx
+{props.name.toUpperCase()}
+```
+結果: {props.name.toUpperCase()}
+
+---
+## Component
+### コンポーネントが渡せる
+```jsx
+<Example components={
+    {
+        Planet: () => <span style={{ backgroundColor: 'aquamarine' }}>component</span>
+    }
+} />
+```
+<Planet />  
+
+### マークダウンの要素を書き換えられる
+- em  
+Rewrite `em`s (`*like so*`) to `i` with a goldenrod foreground color => *like so*  
+- link  
+[他の要素はこちらで確認](https://mdxjs.com/table-of-components/ "title")  
+
+### テーマを使う
+<theme.danger>`<theme.danger></theme.danger>`nestさせられます </theme.danger>  
+<theme.muted>`<theme.muted></theme.muted> `nestさせられます </theme.muted>  
+
+---
+## Reactコンポーネントを使う
+<Question choises={['猫', '犬']} answer={0} />  
+
+## 他のpostを参照する
+<Attention><Other/></Attention>
+
+## MDXProvider
+MDXProvider を使用するとcomponentsをバケツリレーしなくて済む
+```jsx
+import { MDXProvider } from '@mdx-js/react'
+
+<MDXProvider components={{h1: Component1, h2: Component2}}>
+    <Content />
+</MDXProvider>
+```
